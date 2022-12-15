@@ -27,6 +27,6 @@ jobs:
         uses: sushichop/gha-swift-env@v1
         with:
           swift-version: ${{ matrix.swift-version }}
-      - name: Build
+      - name: Test
         run: |
           swift test
