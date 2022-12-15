@@ -1,0 +1,31 @@
+name: "Run Tests"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  test-build:
+    name: Test build on ${{ matrix.os }} with Swift ${{ matrix.swift-version }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        swift-version: ["5.7.1"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Swift ${{ matrix.swift-version }} on macOS/Linux
+        if: ${{ runner.os != 'Windows' }}
+        uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: ${{ matrix.swift-version }}
+      - name: Install Swift ${{ matrix.swift-version }} on Windows
+        if: ${{ runner.os == 'Windows' }}
+        uses: sushichop/gha-swift-env@v1
+        with:
+          swift-version: ${{ matrix.swift-version }}
+      - name: Build
+        run: |
+          swift test
