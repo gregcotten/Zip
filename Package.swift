@@ -22,6 +22,7 @@ let package = Package(
         .target(
             name: "Minizip",
             dependencies: ["zlib"],
+            publicHeadersPath: "include",
             cSettings: [
                 .define("_CRT_SECURE_NO_DEPRECATE", .when(platforms: [.windows])),
                 .define("_CRT_NONSTDC_NO_DEPRECATE", .when(platforms: [.windows]))
