@@ -11,24 +11,8 @@ import XCTest
 
 class ZipTests: XCTestCase {
 
-    #if os(Linux)
-    private let tearDownBlocksQueue = DispatchQueue(label: "XCTest.XCTestCase.tearDownBlocks.lock")
-    private var tearDownBlocks: [() -> Void] = []
-    func addTeardownBlock(_ block: @escaping () -> Void) {
-        tearDownBlocksQueue.sync { tearDownBlocks.append(block) }
-    }
-    #endif
-
     override func setUp() {
         super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        #if os(Linux)
-        var blocks = tearDownBlocksQueue.sync { tearDownBlocks }
-        while let next = blocks.popLast() { next() }
-        #endif
     }
 
     private func url(forResource resource: String, withExtension ext: String? = nil) -> URL? {
