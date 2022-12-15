@@ -19,18 +19,15 @@ class ZipTests: XCTestCase {
         Bundle.module.url(forResource: resource, withExtension: ext)
     }
 
-    private func temporaryDirectory() -> URL {
-        if #available(macOS 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
-            return FileManager.default.temporaryDirectory
-        } else {
-            return URL(fileURLWithPath: NSTemporaryDirectory())
-        }
-    }
-
     private func autoRemovingSandbox() throws -> URL {
-        let sandbox = temporaryDirectory().appendingPathComponent("ZipTests_" + UUID().uuidString, isDirectory: true)
+        let sandbox = FileManager.default.temporaryDirectory.appendingPathComponent("ZipTests_" + UUID().uuidString, isDirectory: true)
         // We can always create it. UUID should be unique.
-        try FileManager.default.createDirectory(at: sandbox, withIntermediateDirectories: true, attributes: nil)
+        do {
+            try FileManager.default.createDirectory(at: sandbox, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print("could not create file at \(sandbox.path): \(error)")
+            throw error
+        }
         // Schedule the teardown block _after_ creating the directory has been created (so that if it fails, no teardown block is registered).
         addTeardownBlock {
             do {
