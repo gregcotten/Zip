@@ -9,6 +9,8 @@
 #ifndef Minizip_h
 #define Minizip_h
 
+#include "zconf.h"
+#include "iowin32.h"
 #include "crypt.h"
 #include "unzip.h"
 #include "zip.h"
