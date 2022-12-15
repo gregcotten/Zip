@@ -9,7 +9,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "zlib",
+            name: "CZlib",
             publicHeadersPath: "include",
             cSettings: [
                 .unsafeFlags(["-Wno-shorten-64-to-32"]),
@@ -21,7 +21,7 @@ let package = Package(
             ]),
         .target(
             name: "Minizip",
-            dependencies: ["zlib"],
+            dependencies: ["CZlib"],
             publicHeadersPath: "include",
             cSettings: [
                 .define("_CRT_SECURE_NO_DEPRECATE", .when(platforms: [.windows])),
