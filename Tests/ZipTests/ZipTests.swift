@@ -113,7 +113,6 @@ class ZipTests: XCTestCase {
 
         XCTAssertTrue(progress.totalUnitCount == progress.completedUnitCount)
     }
-    #endif
     
     func testQuickZip() throws {
         let imageURL1 = url(forResource: "3crBXeO", withExtension: "gif")!
@@ -140,6 +139,7 @@ class ZipTests: XCTestCase {
             try? FileManager.default.removeItem(at: destinationURL)
         }
     }
+    #endif
 
     func testZip() throws {
         let imageURL1 = url(forResource: "3crBXeO", withExtension: "gif")!
@@ -192,7 +192,8 @@ class ZipTests: XCTestCase {
         XCTAssertEqual(attributes600[.posixPermissions] as? Int, 0o600)
         XCTAssertEqual(attributes604[.posixPermissions] as? Int, 0o604)
     }
-    
+
+    #if !os(Windows)
     func testQuickUnzipSubDir() throws {
         let bookURL = url(forResource: "bb8", withExtension: "zip")!
         let unzipDestination = try Zip.quickUnzipFile(bookURL)
@@ -207,6 +208,7 @@ class ZipTests: XCTestCase {
         XCTAssertTrue(fileManager.fileExists(atPath: subDir.path))
         XCTAssertTrue(fileManager.fileExists(atPath: imageURL.path))
     }
+    #endif
 
     func testFileExtensionIsNotInvalidForValidUrl() {
         let fileUrl = URL(string: "file.cbz")
