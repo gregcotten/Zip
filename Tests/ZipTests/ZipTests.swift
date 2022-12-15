@@ -85,6 +85,7 @@ class ZipTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: destinationPath.path))
     }
     
+    #if !os(Windows)
     func testImplicitProgressUnzip() throws {
         let progress = Progress(totalUnitCount: 1)
 
@@ -112,6 +113,7 @@ class ZipTests: XCTestCase {
 
         XCTAssertTrue(progress.totalUnitCount == progress.completedUnitCount)
     }
+    #endif
     
     func testQuickZip() throws {
         let imageURL1 = url(forResource: "3crBXeO", withExtension: "gif")!
